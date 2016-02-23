@@ -7,7 +7,7 @@ import slick.driver.H2Driver.api._
   */
 class Users(tag:Tag) extends TableWithId[User](tag, "USERS") {
 
-  def id = column[String]("id", O.PrimaryKey)
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def firstName = column[String]("FIRST_NAME")
   def lastName = column[String]("LAST_NAME")
   def phone = column[String]("PHONE")

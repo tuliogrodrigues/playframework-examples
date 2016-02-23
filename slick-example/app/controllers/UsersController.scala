@@ -1,9 +1,11 @@
 package controllers
 
-import models.{User, UserRepository}
+import models.User
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import play.api.mvc._
+import repositories.UserRepository
+
 /**
   * Created by trodrigues on 17/02/16.
   */
@@ -16,7 +18,7 @@ class UsersController extends Controller {
       .recover{ case t:Throwable => BadRequest(t.toString)}
   }
 
-  def find(userId:String) = Action.async {
+  def find(userId:Long) = Action.async {
     UserRepository
       .findById(userId)
       .map(user => Ok(Json.toJson(user)))
@@ -33,7 +35,7 @@ class UsersController extends Controller {
       .recover{ case t:Throwable => BadRequest(s"Cannot create user: ${user.email}. Exception: $t")}
   }
 
-  def update(userId:String) = Action.async(parse.json[User]) { implicit request =>
+  def update(userId:Long) = Action.async(parse.json[User]) { implicit request =>
 
     val user = request.body
 
