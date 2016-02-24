@@ -10,6 +10,8 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  "io.getquill" % "quill-core_2.11" % "0.4.0",
+  "io.getquill" % "quill-sql_2.11" % "0.4.0",
   specs2 % Test
 )
 
