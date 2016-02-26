@@ -1,7 +1,0 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
-
-# Home page
-GET     /users                           controllers.Application.list
-GET     /users/:id                       controllers.Application.findById(id:Long)
