@@ -31,19 +31,20 @@ object UserRepository {
 
   def save(user:User) = {
 
-    val userId = UUID.randomUUID().toString
+    val id = UUID.randomUUID().toString
 
     val query = SQL("INSERT INTO USER(ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE) VALUES({userId}, {firstName}, {lastName}, {email}, {phone})")
-      .bindByName('userId -> userId)
+      .bindByName('userId -> id)
       .bindByName('firstName -> user.firstName)
       .bindByName('lastName -> user.lastName)
       .bindByName('email -> user.email)
       .bindByName('phone -> user.phone)
       .map(rs => rs.int(0))
 
-    Database.update[Int](query)
-
-    findById(userId)
+    Database.update[Int](query) match {
+      case count:Int if count > 0 => findById(id)
+      case _ => Option.empty[User]
+    }
   }
 
   def update(id:String, user:User) = {
@@ -56,9 +57,10 @@ object UserRepository {
       .bindByName('phone -> user.phone)
       .map(rs => rs.int(0))
 
-    Database.update[Int](query)
-
-    findById(id)
+    Database.update[Int](query) match {
+      case count:Int if count > 0 => findById(id)
+      case _ => Option.empty[User]
+    }
   }
 
   def delete(id:String) = {
