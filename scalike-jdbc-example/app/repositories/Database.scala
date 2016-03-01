@@ -17,7 +17,7 @@ object Database {
 
   def connection = ConnectionPool.borrow()
 
-  def withTransaction[T,C](sql:SQL[T, HasExtractor], f:SQL[T, HasExtractor] => C) = {
+  private def withTransaction[T,C](sql:SQL[T, HasExtractor], f:SQL[T, HasExtractor] => C) = {
 
     val conn:Connection = Database.connection
 
@@ -26,6 +26,10 @@ object Database {
     } finally {
       conn.close()
     }
+  }
+
+  def schema[String](sql:SQL[String, HasExtractor]) = {
+    withTransaction[String, Boolean](sql, (sq:SQL[String, HasExtractor]) => sq.execute().apply())
   }
 
   def singleResult[T](sql:SQL[T, HasExtractor]) = {
