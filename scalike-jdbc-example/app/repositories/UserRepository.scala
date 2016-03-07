@@ -3,7 +3,7 @@ package repositories
 import java.util.UUID
 
 import models.User
-import scalikejdbc.{HasExtractor, SQL, WrappedResultSet}
+import scalikejdbc.{SQL, WrappedResultSet}
 
 /**
   * Created by trodrigues on 26/02/16.
